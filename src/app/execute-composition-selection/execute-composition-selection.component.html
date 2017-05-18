@@ -1,0 +1,6 @@
+<div class="col-sm-7 form-group">
+  <label for="executeCompositionSelection">Execute Composition</label>
+  <select class="form-control" id="executeCompositionSelection" [(ngModel)]="selectedExecuteComposition">
+    <option *ngFor="let composition of executeCompositions" [ngValue]="composition">{{composition}}</option>}
+  </select>
+</div>

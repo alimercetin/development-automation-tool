@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <form>
+        <div class="row">
+          <app-module-selection></app-module-selection>
+          <app-transaction-type-selection></app-transaction-type-selection>
+        </div>
+        <div class="row" *ngIf="firstStepCompleted">
+          <app-confirm-composition-selection></app-confirm-composition-selection>
+        </div>
+        <div class="row" *ngIf="firstStepCompleted">
+          <app-execute-composition-selection></app-execute-composition-selection>
+        </div>
+        <div class="row" *ngIf="secondStepCompleted">
+          <app-module-path></app-module-path>
+        </div>
+        <div class="row" *ngIf="thirdStepCompleted">
+          <app-detail-info></app-detail-info>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <button type="submit" class="btn btn-default btn-primary" (click)="onSubmitClicked()" *ngIf="!thirdStepCompleted">Submit Button</button>
+            <button type="finish" class="btn btn-default btn-primary" (click)="onSubmitClicked()" *ngIf="thirdStepCompleted">Finish Button</button>
+            <button type="reset" class="btn btn-secondary btn-warning" (click)="onResetClicked()">Reset Button</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

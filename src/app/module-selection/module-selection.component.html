@@ -1,0 +1,6 @@
+<div class="col-sm-2 form-group">
+  <label for="moduleSelection">Module Name</label>
+  <select class="form-control" id="moduleSelection" [(ngModel)]="selectedModule">
+    <option *ngFor="let module of modules" [ngValue]="module">{{module}}</option>}
+  </select>
+</div>
