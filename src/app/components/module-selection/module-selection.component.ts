@@ -14,4 +14,7 @@ export class ModuleSelectionComponent implements OnInit {
   ngOnInit() {
   }
 
+  onChange(module) {
+  }
+
 }

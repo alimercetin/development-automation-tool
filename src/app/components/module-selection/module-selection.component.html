@@ -1,6 +1,6 @@
 <div class="col-sm-2 form-group">
   <label for="moduleSelection">Module Name</label>
-  <select class="form-control" id="moduleSelection" [(ngModel)]="selectedModule">
+  <select class="form-control" id="moduleSelection" [(ngModel)]="selectedModule" (ngModelChange)="onChange($event)">
     <option *ngFor="let module of modules" [ngValue]="module">{{module}}</option>}
   </select>
 </div>
