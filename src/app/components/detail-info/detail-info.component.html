@@ -1,8 +1,8 @@
 <div class="col-sm-3 form-group">
   <label>Is Approval Transaction</label>
-  <input type="checkbox" [checked]="hasApproval" (change)="hasApproval = !hasApproval" />
+  <input type="checkbox" [(ngModel)]="hasApproval" (ngModelChange)="onApprovalStatusChange($event)"/>
 </div>
 <div class="col-sm-4 form-group">
   <label >Does Document Control Need</label>
-  <input type="checkbox" [checked]="hasDocumentControl" (change)="hasDocumentControl = !hasDocumentControl" />
+  <input type="checkbox" [(ngModel)]="hasDocumentControl" (ngModelChange)="onDocumentControlStatusChange($event)"/>
 </div>

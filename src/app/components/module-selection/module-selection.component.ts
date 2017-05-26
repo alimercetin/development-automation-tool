@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-module-selection',
   templateUrl: './module-selection.component.html'
 })
 export class ModuleSelectionComponent implements OnInit {
+  @Output() moduleSelected = new EventEmitter();
 
-  modules = ['ACCT', 'ACNT', 'BPMX', 'INFT', 'ZZZZ'];
+  @Input() moduleList: string[];
   selectedModule = null;
 
   constructor() { }
@@ -15,6 +16,7 @@ export class ModuleSelectionComponent implements OnInit {
   }
 
   onChange(module) {
+    this.moduleSelected.emit(this.selectedModule);
   }
 
 }

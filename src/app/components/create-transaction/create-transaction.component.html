@@ -3,25 +3,24 @@
     <div class="col-xs-12">
       <form>
         <div class="row">
-          <app-module-selection></app-module-selection>
-          <app-transaction-type-selection></app-transaction-type-selection>
+          <app-module-selection (moduleSelected)="onModuleSelected($event)" [moduleList]="modules"></app-module-selection>
+          <app-transaction-type-selection (transactionTypeSelected)="onTransactionTypeSelected($event)" [typeList]="types"></app-transaction-type-selection>
         </div>
-        <div class="row" *ngIf="firstStepCompleted">
-          <app-confirm-composition-selection></app-confirm-composition-selection>
+        <div class="row" *ngIf="firstPartCompleted">
+          <app-composition-selection (compositionSelected)="onConfirmCompositionSelected($event)" [compositionList]="confirmCompositions" [labelString]="confirmCompositionLabel"></app-composition-selection>
         </div>
-        <div class="row" *ngIf="firstStepCompleted">
-          <app-execute-composition-selection></app-execute-composition-selection>
+        <div class="row" *ngIf="firstPartCompleted">
+          <app-composition-selection (compositionSelected)="onExecuteCompositionSelected($event)" [compositionList]="executeCompositions" [labelString]="executeCompositionLabel"></app-composition-selection>
         </div>
-        <div class="row" *ngIf="secondStepCompleted">
-          <app-module-path></app-module-path>
+        <div class="row" *ngIf="secondPartCompleted">
+          <app-module-path (modulePathSelected)="onModulePathSelected($event)"></app-module-path>
         </div>
-        <div class="row" *ngIf="thirdStepCompleted">
-          <app-detail-info></app-detail-info>
+        <div class="row" *ngIf="thirdPartCompleted">
+          <app-detail-info (approvalStatusChanged)="onApprovalStatusChanged($event)" (documentControlStatusChanged)="onDocumentControlStatusChanged($event)"></app-detail-info>
         </div>
         <div class="row">
           <div class="col-xs-12">
-            <button type="submit" class="btn btn-default btn-primary" (click)="onSubmitClicked()" *ngIf="!thirdStepCompleted">Submit Button</button>
-            <button type="finish" class="btn btn-default btn-primary" (click)="onSubmitClicked()" *ngIf="thirdStepCompleted">Finish Button</button>
+            <button type="finish" class="btn btn-default btn-primary" (click)="onSubmitClicked()" *ngIf="thirdPartCompleted">Finish Button</button>
             <button type="reset" class="btn btn-secondary btn-warning" (click)="onResetClicked()">Reset Button</button>
           </div>
         </div>

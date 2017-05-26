@@ -1,6 +1,6 @@
 <div class="col-sm-5 form-group">
   <label for="txnTypeSelection">Transaction Type</label>
-  <select class="form-control" id="txnTypeSelection" [(ngModel)]="selectedTxnType">
-    <option *ngFor="let type of types" [ngValue]="type">{{type}}</option>}
+  <select class="form-control" id="txnTypeSelection" [(ngModel)]="selectedTxnType" (ngModelChange)="onChange($event)">
+    <option *ngFor="let type of typeList" [ngValue]="type">{{type}}</option>}
   </select>
 </div>

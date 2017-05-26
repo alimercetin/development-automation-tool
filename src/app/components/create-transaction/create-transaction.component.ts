@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { ExecuteCompositionSelectionComponent } from '../execute-composition-selection/execute-composition-selection.component';
-import { ConfirmCompositionSelectionComponent } from '../confirm-composition-selection/confirm-composition-selection.component';
+import { CompositionSelectionComponent } from '../composition-selection/composition-selection.component';
 import { TransactionTypeSelectionComponent } from '../transaction-type-selection/transaction-type-selection.component';
 import { ModuleSelectionComponent } from '../module-selection/module-selection.component';
 import { TransactionDefinition } from '../shared/transaction-definition.model';
@@ -17,14 +16,28 @@ export class CreateTransactionComponent implements OnInit {
   @ViewChild(DetailInfoComponent) detailInfo: DetailInfoComponent;
   @ViewChild(TransactionTypeSelectionComponent) transactionType: TransactionTypeSelectionComponent;
   @ViewChild(ModuleSelectionComponent) module: ModuleSelectionComponent;
-  @ViewChild(ConfirmCompositionSelectionComponent) confirmComposition: ConfirmCompositionSelectionComponent;
-  @ViewChild(ExecuteCompositionSelectionComponent) executeComposition: ExecuteCompositionSelectionComponent;
+  @ViewChild(CompositionSelectionComponent) confirmComposition: CompositionSelectionComponent;
   @ViewChild(ModulePathComponent) modulePath: ModulePathComponent;
 
   transactionDefinition: TransactionDefinition = new TransactionDefinition();
-  firstStepCompleted: boolean = false;
-  secondStepCompleted: boolean = false;
-  thirdStepCompleted: boolean = false;
+  firstPartCompleted: boolean = false;
+  secondPartCompleted: boolean = false;
+  thirdPartCompleted: boolean = false;
+
+  modules: string[] = ['ACCT', 'ACNT', 'BPMX', 'INFT', 'ZZZZ'];
+  types: string[] = ['Composition Transaction', 'Start-Confirm-Execute', 'Criteria-List', 'Parameter Screen', 'Custom Screen 1'];
+  confirmCompositions: string[] = ['ACCTConfirmCreateComposition', 
+                        'ACNTConfirmCreateComposition', 
+                        'BPMXConfirmCreateComposition', 
+                        'INFTConfirmCreateComposition', 
+                        'ZZZZConfirmCreateComposition'];
+  executeCompositions: string[] = ['ACCTExecuteCreateComposition', 
+                        'ACNTExecuteCreateComposition', 
+                        'BPMXExecuteCreateComposition', 
+                        'INFTExecuteCreateComposition', 
+                        'ZZZZExecuteCreateComposition'];
+  confirmCompositionLabel = 'Confirm Composition';
+  executeCompositionLabel = 'Execute Composition';
 
   constructor() { }
 
@@ -32,34 +45,58 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   onSubmitClicked() {
-    if (this.firstStepCompleted === false) { 
-      this.firstStepCompleted = true;
-    } else if (this.secondStepCompleted === false) {
-      this.secondStepCompleted = true;
-    } else if (this.thirdStepCompleted === false) {
-      this.thirdStepCompleted = true;
-    } else {
-      this.transactionDefinition.confirmCompositionName = this.confirmComposition.selectedConfirmComposition;
-      this.transactionDefinition.executeCompositionName = this.executeComposition.selectedExecuteComposition;
-      this.transactionDefinition.HasDocumentControl = this.detailInfo.hasDocumentControl;
-      this.transactionDefinition.HasApproval = this.detailInfo.hasApproval;
-      this.transactionDefinition.moduleName = this.module.selectedModule;
-      this.transactionDefinition.path = this.modulePath.modulePath;
-      this.transactionDefinition.transactionType = this.transactionType.selectedTxnType;
-    }
+
   }
 
   onResetClicked() {
-    this.firstStepCompleted = false;
-    this.secondStepCompleted = false;
-    this.thirdStepCompleted = false;
-    this.confirmComposition.selectedConfirmComposition = '';
-    this.executeComposition.selectedExecuteComposition = '';
-    this.transactionType.selectedTxnType = '';
-    this.module.selectedModule = '';
-    this.modulePath.modulePath = '';
-    this.detailInfo.hasApproval = false;
-    this.detailInfo.hasDocumentControl = false;
+    this.firstPartCompleted = false;
+    this.secondPartCompleted = false;
+    this.thirdPartCompleted = false;
+  }
+
+  onModuleSelected(moduleData: string) {
+    this.transactionDefinition.setModuleName(moduleData);
+
+    if (this.transactionDefinition.getTransactionType()) {
+      this.firstPartCompleted = true;
+    }
+  }
+
+  onTransactionTypeSelected(transactionTypeData: string) {
+    this.transactionDefinition.setTransactionType(transactionTypeData);
+
+    if (this.transactionDefinition.getModuleName()) {
+      this.firstPartCompleted = true;
+    }
+  }
+
+  onConfirmCompositionSelected(confirmCompositionData: string) {
+    this.transactionDefinition.setConfirmCompositionName(confirmCompositionData);
+
+    if (this.transactionDefinition.getExecuteCompositionName()) {
+      this.secondPartCompleted = true;
+    }
+  }
+
+  onExecuteCompositionSelected(executeCompositionData: string) {
+    this.transactionDefinition.setExecuteCompositionName(executeCompositionData);
+
+    if (this.transactionDefinition.getConfirmCompositionName()) {
+      this.secondPartCompleted = true;
+    }
+  }
+
+  onModulePathSelected(modulePathData: string) {
+    this.transactionDefinition.setPath(modulePathData);
+    this.thirdPartCompleted = true;
+  }
+
+  onApprovalStatusChanged(approvalStatusData: boolean) {
+    this.transactionDefinition.setHasApproval(approvalStatusData);
+  }
+
+  onDocumentControlStatusChanged(documentControlStatusData: boolean) {
+    this.transactionDefinition.setHasDocumentControl(documentControlStatusData);
   }
 
 }
